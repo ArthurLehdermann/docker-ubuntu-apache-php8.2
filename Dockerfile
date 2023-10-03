@@ -65,7 +65,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN apt-get update && apt-get install -y npm nodejs
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update && apt-get install -y \
     unixodbc \
     unixodbc-dev \
@@ -75,17 +75,17 @@ RUN apt-get update && apt-get install -y \
 #    mssql-tools \
 #    msodbcsql
 
-RUN pecl install sqlsrv
-RUN echo "extension=sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
-RUN pecl install pdo_sqlsrv
-RUN echo "extension=pdo_sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20220829/sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20220829/pdo_sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
-RUN echo "extension=/usr/lib/php/20220829/sqlsrv.so" >> /etc/php/8.2/cli/php.ini
-RUN echo "extension=/usr/lib/php/20220829/pdo_sqlsrv.so" >> /etc/php/8.2/cli/php.ini
+#RUN pecl install sqlsrv
+#RUN echo "extension=sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
+#RUN pecl install pdo_sqlsrv
+#RUN echo "extension=pdo_sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
+#RUN echo "extension=/usr/lib/php/20220829/sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
+#RUN echo "extension=/usr/lib/php/20220829/sqlsrv.so" >> /etc/php/8.2/cli/php.ini
+#RUN echo "extension=/usr/lib/php/20220829/pdo_sqlsrv.so" >> /etc/php/8.2/apache2/php.ini
+#RUN echo "extension=/usr/lib/php/20220829/pdo_sqlsrv.so" >> /etc/php/8.2/cli/php.ini
 #RUN apt-get install -y msodbcsql
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
-RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+#RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+#RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
 
 RUN apt-get install -y locales && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && locale-gen
 
