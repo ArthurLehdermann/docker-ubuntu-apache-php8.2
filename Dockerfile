@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y \
         php8.2-odbc \
         php8.2-pgsql \
         php8.2-pspell \
+        php8.2-redis \
         php8.2-readline \
         php8.2-soap \
         php8.2-sqlite3 \
@@ -62,7 +63,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN apt-get update && apt-get install -y npm nodejs
+SHELL ["/bin/bash", "--login", "-i", "-c"]
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+RUN source /root/.bashrc && nvm install node --lts
 
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
