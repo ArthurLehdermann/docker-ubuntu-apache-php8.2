@@ -50,11 +50,11 @@ RUN apt-get update && apt-get install -y \
         php8.2-zip \
         php8.2-opcache \
         php-json \
-        php-apcu \
-        php-imagick \
-        php-memcached \
+        php8.2-apcu \
+        php8.2-imagick \
+        php8.2-memcached \
         php-pear \
-        php-redis \
+        php8.2-redis \
         php-token-stream \
         phpunit \
         sendmail \
@@ -107,6 +107,12 @@ RUN chmod 755 /run.sh
 COPY conf/config /config
 
 WORKDIR /var/www/html
+
+# O PPA traz php8.4/8.5 como dependência de pacotes sem versão; o CLI padrão
+# precisa ser o 8.2, igual ao mod_php do Apache.
+RUN for b in php phar phar.phar php-cgi phpdbg phpize php-config; do \
+        [ -e /usr/bin/${b}8.2 ] && update-alternatives --set $b /usr/bin/${b}8.2; \
+    done; php -v | head -1
 
 EXPOSE 80 80
 
